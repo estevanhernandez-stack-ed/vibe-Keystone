@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+*.log
+
+# Editor
+.vscode/
+.idea/
+
+# OS / scratch
+.scratch/
+node_modules/
