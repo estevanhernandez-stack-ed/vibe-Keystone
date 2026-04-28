@@ -1,6 +1,6 @@
 ---
 name: keystone
-description: Bootstrap a 626Labs-pattern CLAUDE.md for a repository. The keystone is the load-bearing structural file — every agent decision in the repo rests on it. Use when starting in a new repo without a CLAUDE.md, or when the existing one is stale. Trigger phrases include "set up CLAUDE.md", "create the keystone", "bootstrap claude md", "claude md for this repo", "/keystone".
+description: Bootstrap a CLAUDE.md from the 626Labs project-CLAUDE pattern, with tenant-aware adaptation. Interviews the user for org / decision surface / voice rules / persona before drafting, so the produced file reflects THEIR conventions — not 626Labs defaults baked in. The keystone is the load-bearing structural file — every agent decision in the repo rests on it. Use when starting in a new repo without a CLAUDE.md, or when the existing one is stale. Trigger phrases include "set up CLAUDE.md", "create the keystone", "bootstrap claude md", "claude md for this repo", "/keystone".
 ---
 
 # Keystone — bootstrap a 626Labs-pattern CLAUDE.md
@@ -28,34 +28,81 @@ Identify the repo type:
 - **Long-form writing / thesis** (prose-heavy, citation-bound)
 - **Infrastructure / mixed** (multiple surfaces)
 
-## Step 1 — Confirm scope before drafting
+## Step 1 — Tenant interview before drafting
 
-Ask the user (one round, concise):
+Before a CLAUDE.md is meaningful, you need to know whose conventions it should encode. This skill ships with **626Labs defaults** baked in (Dashboard MCP for decisions, 626Labs voice rules, brand tokens, Architect persona inheritance) — but those should only land when the user is actually 626Labs. For any other tenant, ask first.
 
-1. Is this 626Labs-owned, or 626Labs-adjacent?
-2. Does the global persona (`~/.claude/CLAUDE.md` — typically The Architect) apply, or does this repo need a persona override (e.g., Lead Writer for thesis work)?
-3. What's the primary work mode: code, marketing/content, writing, infrastructure, mixed?
-4. Existing `.claude/agents/` to reference — yes / no / propose new?
+Ask the user in one round (concise — single message back). Group the questions and let them skip ones that don't apply:
 
-If the existing CLAUDE.md is being refreshed (not bootstrapped fresh), also ask: keep the existing persona/voice/structure, or rewrite section-by-section?
+### Tenant identity
+
+1. **Whose repo is this — 626Labs, another organization, an individual project?**
+
+   If 626Labs: the defaults apply (Dashboard MCP, brand voice, Architect persona). Skip to question 4.
+
+   If another tenant, follow up:
+   - What's the organization or individual name? (Used in references throughout the produced CLAUDE.md.)
+   - **Do you have tenant docs I should read before drafting?** Examples: a global `~/.claude/CLAUDE.md` defining a persona, an org `HANDBOOK.md`, a `CONTRIBUTING.md`, a `VALUES.md` / principles doc, a brand voice guide, a style guide, an architecture doc. **Name the paths and I'll read them before drafting** — your priorities, voice rules, and conventions should fold into the produced file.
+
+### Decisions log
+
+2. **Where do significant decisions log?**
+   - `mcp__626Labs__manage_decisions log` — 626Labs Dashboard MCP (default for 626Labs repos)
+   - A different MCP / tool (name it)
+   - A `decisions.md` (or similar) file in the repo
+   - An external tracker (Linear / Jira / Notion / GitHub Issues)
+   - None — decisions live in commit messages and PR descriptions only
+
+### Persona
+
+3. **Persona inheritance:**
+   - **Inherit from global** — does `~/.claude/CLAUDE.md` define a persona this repo should reference (e.g., 626Labs's "The Architect")? If yes, the produced CLAUDE.md will say "inherits {name}, no need to re-establish."
+   - **Override** — does this repo need its own persona that supersedes global (typical for writing/thesis where Lead Writer takes over)?
+   - **No persona** — the repo doesn't operate under a named persona; skip the persona block entirely.
+
+### Repo type and existing agents
+
+4. **Primary work mode:** code platform / marketing-content / writing-thesis / infrastructure-mixed
+5. **Existing `.claude/agents/`?** — list them, or "propose new ones based on the repo type."
+
+### If refreshing an existing CLAUDE.md
+
+If `CLAUDE.md` already exists, also ask: keep the existing persona/voice/structure and refresh the rest, or rewrite section-by-section?
+
+---
+
+After the user answers, **read any tenant docs they named before drafting**. Tenant priorities, voice rules, and decision-log conventions should fold into the produced CLAUDE.md instead of inheriting 626Labs defaults that don't apply.
+
+Carry these answers downstream as adaptations:
+
+| Section | 626Labs default | Other tenant — substitute |
+|---|---|---|
+| Tech Stack & Voice (content-bearing repos) | 626Labs voice rules + brand tokens (cyan, magenta, navy, Space Grotesk, etc.) | Pull from tenant brand/voice docs. If no docs, propose a minimal voice block and ask the user to confirm. |
+| Design system reference | `~/.claude/skills/626labs-design/` | Tenant's equivalent if any; otherwise drop the section. |
+| Decisions log | `mcp__626Labs__manage_decisions log` | Whatever the user named in Q2. If "none," drop the section or point at commit/PR conventions. |
+| Persona inheritance note | The Architect (or whatever 626Labs has) | Tenant's persona name, or "no persona" framing. |
 
 ## Step 2 — Skeleton (sections in this order)
 
 Produce a `CLAUDE.md` with these sections. Drop sections marked CONDITIONAL when they don't apply.
 
-### 1. Title + persona inheritance note (ALWAYS)
+### 1. Title + persona inheritance note (ALWAYS, conditional on Step 1 Q3)
+
+If the user said **inherit from global**:
 
 ```markdown
 # {Repo Name}
 
-> **Persona:** This repo inherits {global persona name} from `~/.claude/CLAUDE.md`. No need to re-establish — just adds project context below.
+> **Persona:** This repo inherits {global persona name from Step 1} from `~/.claude/CLAUDE.md`. No need to re-establish — just adds project context below.
 ```
 
-If the repo overrides the global persona (writing/thesis case), say so explicitly:
+If the user said **override** (writing/thesis case):
 
 ```markdown
 > **Persona override:** In this repo, you operate as {Project Persona} — not the global one. {Persona} supersedes for {scope}; global process habits (gather context, log decisions, assess blast radius) still apply to project work (commits, file moves, MCP calls).
 ```
+
+If the user said **no persona** at all, drop the blockquote entirely. Just the `# {Repo Name}` title.
 
 ### 2. Tech Stack (ALWAYS) — paired with Voice for content-heavy repos
 
@@ -70,7 +117,9 @@ For a code-only repo:
 - **Testing:** {actual}
 ```
 
-For any public-facing / content-bearing repo, add a Voice section:
+For any public-facing / content-bearing repo, add a Voice section.
+
+**If 626Labs-owned (Step 1 Q1):**
 
 ```markdown
 ## Tech Stack & Voice
@@ -80,13 +129,29 @@ For any public-facing / content-bearing repo, add a Voice section:
 - **Voice:** Builder-to-builder, second person, sentence case. No "empower / leverage / seamlessly / unlock / unleash." Em-dashes welcome. No emoji in UI copy or marketing surfaces. Tagline: *Imagine Something Else.*
 ```
 
-### 3. Design system reference (CONDITIONAL — visual repos)
+**If another tenant:** pull voice rules + brand tokens from any tenant docs the user named in Step 1. Match the tenant's existing brand voice rather than inventing one. If no tenant voice docs exist, write a minimal block and ask the user to confirm or extend:
+
+```markdown
+## Tech Stack & Voice
+
+- **Stack:** {as above}
+- **Voice:** {tenant-provided voice rules, OR — if none — a minimal "builder-to-builder, second person, no corporate speak" placeholder for the user to extend}
+- **Brand:** {tenant-provided tokens, OR — if none — note "no brand tokens established"}
+```
+
+### 3. Design system reference (CONDITIONAL — visual repos AND a design skill exists)
+
+**If 626Labs-owned:**
 
 ```markdown
 ## Design system
 
 Canonical brand spec lives at `~/.claude/skills/626labs-design/` (globally available — same skill across every 626 Labs repo). Use `colors_and_type.css` as the token source and `ui_kits/` as the pattern reference. Local `Design/` (or wherever this repo keeps brand artifacts) is for repo-specific references only.
 ```
+
+**If another tenant with their own design skill / system docs:** point at their canonical brand spec the same way.
+
+**If no tenant design system exists:** drop this section entirely. Don't fabricate a reference.
 
 ### 4. What's Where (ALWAYS)
 
@@ -135,7 +200,11 @@ Use sub-headings under one parent section. Be concrete — name the actual files
 - **File rules:** {what's read-only, what's generated, what's the canonical source}
 ```
 
-### 8. Decisions log (ALWAYS)
+### 8. Decisions log (CONDITIONAL on Step 1 Q2 — drop entirely if user said "none")
+
+The shape adapts to the user's answer in Step 1 Q2.
+
+**If 626Labs Dashboard MCP:**
 
 ```markdown
 ## Decisions log
@@ -151,6 +220,22 @@ Skip the routine: {what doesn't get logged}.
 
 If unbound (no 626Labs project): tag with the repo name in the description and set `projectId: null`.
 ```
+
+**If a different MCP / tool:** swap the tool name and any binding mechanics. Same shape, same bar.
+
+**If a `decisions.md` file:**
+
+```markdown
+## Decisions log
+
+Significant decisions land in `decisions.md` (or `docs/decisions/` for ADR-style). Each entry: date, title, context, decision, consequences. The bar: *would future-you want to know this in 3–6 months?*
+
+Categories worth logging: {repo-specific list}. Skip the routine.
+```
+
+**If an external tracker (Linear / Jira / Notion / GitHub Issues):** point at the tracker, link to the project/board, name the labels or convention used to mark "decision" entries.
+
+**If "none":** drop this section entirely. Don't fabricate a decision-log surface that doesn't exist. Optionally add a one-line note in the Conventions section: "Significant decisions are captured in commit messages and PR descriptions; no separate decision log."
 
 ### 9. What NOT to do (ALWAYS)
 
