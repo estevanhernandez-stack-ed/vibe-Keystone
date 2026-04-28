@@ -1,0 +1,28 @@
+{
+  "name": "vibe-keystone",
+  "owner": {
+    "name": "626Labs LLC"
+  },
+  "metadata": {
+    "description": "Vibe Keystone — bootstrap a 626Labs-pattern CLAUDE.md with tenant-aware adaptation. Self-listing marketplace for the vibe-keystone plugin."
+  },
+  "plugins": [
+    {
+      "name": "vibe-keystone",
+      "source": "./plugins/vibe-keystone",
+      "description": "Bootstrap a CLAUDE.md from the 626Labs project-CLAUDE pattern with tenant-aware adaptation. Interviews the user for org / decision surface / voice rules / persona before drafting, so the produced file reflects THEIR conventions — not 626Labs defaults baked in. The keystone is the load-bearing structural file — every agent decision in the repo rests on it.",
+      "author": {
+        "name": "626Labs LLC"
+      },
+      "keywords": [
+        "claude-md",
+        "keystone",
+        "bootstrap",
+        "tenant-aware",
+        "626labs",
+        "claude-code-plugin"
+      ],
+      "category": "development"
+    }
+  ]
+}
