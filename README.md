@@ -119,7 +119,7 @@ The skeleton (sections, ordering, "earn the folder" discipline, "What NOT to do"
 
 ## License
 
-MIT (or whatever you'd like to apply — repo doesn't have a LICENSE file yet; add one before sharing widely).
+MIT — see [`LICENSE`](LICENSE). Copyright (c) 2026 626Labs LLC (Estevan Hernandez).
 
 ---
 
