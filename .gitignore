@@ -9,3 +9,6 @@ Thumbs.db
 # OS / scratch
 .scratch/
 node_modules/
+
+# Other plugins' per-repo config (vibe-iterate ran on this repo; not Keystone's surface)
+.vibe-iterate/
