@@ -1,6 +1,6 @@
 # Privacy Policy — Vibe Keystone
 
-**Effective:** 2026-04-28
+**Effective:** 2026-05-23
 **Plugin:** vibe-keystone
 **Author:** 626Labs LLC
 
@@ -29,6 +29,15 @@ All on your local filesystem:
   with other 626Labs plugins). Keystone reads it to honor your persona,
   voice rules, and decision-surface preferences during the interview.
   Read-only.
+- **`~/.claude/plugins/data/vibe-keystone/captures.jsonl`** — an
+  **opt-in, off-by-default** capture log. Written only when you explicitly
+  say yes at the end of a `/keystone` run. Each line is an anonymous
+  structural note about that run (repo type, and which skeleton sections
+  were included / dropped / overridden) — **never your code, file paths,
+  repo name, or organization name.** Read back only by
+  `/vibe-keystone:evolve` to propose improvements to the skeleton. Local
+  only; never transmitted. The agent appends it directly — no script is
+  shipped or run.
 
 ## What the plugin transmits
 
