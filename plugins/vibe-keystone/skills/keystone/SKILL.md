@@ -237,6 +237,22 @@ Categories worth logging: {repo-specific list}. Skip the routine.
 
 **If "none":** drop this section entirely. Don't fabricate a decision-log surface that doesn't exist. Optionally add a one-line note in the Conventions section: "Significant decisions are captured in commit messages and PR descriptions; no separate decision log."
 
+### 8b. Knowledge & taste — repo as system of record (CONDITIONAL — repos with tacit conventions worth capturing)
+
+The agent only sees what's in the repo. Taste, "we don't do it that way here," the reasoning that lives in Slack threads and someone's head — none of it reaches the agent unless it's written down where the agent reads. For any repo with real tacit conventions, designate an in-repo home for them and name it here.
+
+```markdown
+## Knowledge & taste
+
+The repo is the system of record — if it isn't written here, the agent can't see it.
+
+- **Conventions / taste:** {path — e.g., `docs/conventions.md`, or this file's Conventions section}
+- **Why-decisions:** {the decisions-log surface named above}
+- **Things the agent keeps getting wrong:** capture the correction as a short note in {path} the moment it surfaces, instead of re-explaining it every session.
+```
+
+Drop this section when the repo has no tacit conventions beyond what Conventions already covers (most greenfield or solo scratch repos). Don't manufacture a knowledge base that doesn't exist.
+
 ### 9. What NOT to do (ALWAYS)
 
 3–5+ explicit, repo-specific guardrails. Each one names the failure mode and (where useful) the right alternative.
@@ -293,6 +309,42 @@ After the CLAUDE.md lands, propose:
 - `.claude/hooks/` for automation that closes a feedback loop (template-edit drift checks, type-check-after-edit, etc.)
 
 Each suggestion is a proposal. The user decides what gets built.
+
+## Step 6 — Capture for evolution (opt-in, off by default)
+
+Keystone is a one-shot generator — it writes a great file and never sees it again, so on its own it can't learn which parts of the skeleton it keeps getting wrong. This step is the smallest possible sensor that fixes that, and it is **strictly opt-in**.
+
+After the CLAUDE.md lands, ask once:
+
+> "Want me to record a small, anonymous note about what this run produced, so `/vibe-keystone:evolve-keystone` can spot patterns and improve the skeleton over time? It's local-only, opt-in, and captures structure — never your code or your org's name. [y/N]"
+
+Default is no. A "no" — or no answer — writes nothing.
+
+**Only if the user says yes**, append one JSON line to `~/.claude/plugins/data/vibe-keystone/captures.jsonl` (create the directory if absent). The agent performs this append directly — **Keystone ships no scripts**, and this step does not introduce one. Capture exactly this shape, and nothing more:
+
+```json
+{
+  "schema_version": 1,
+  "timestamp": "<ISO local datetime>",
+  "run_type": "fresh | refresh",
+  "tenant_kind": "626labs | other-org | individual",
+  "repo_type_autodetected": "code | marketing-content | long-form-writing | infra-mixed",
+  "repo_type_final": "code | marketing-content | long-form-writing | infra-mixed",
+  "sections_included": ["title", "tech-stack", "what-where"],
+  "sections_dropped": ["design-system", "decisions-log"],
+  "sections_overridden": [{ "section": "persona", "from_default": "inherit", "to": "override" }],
+  "sections_requested_not_in_skeleton": ["<free-text label of a section the user asked for that the skeleton doesn't offer>"]
+}
+```
+
+`repo_type_autodetected` is your Step 0 classification; `repo_type_final` is what it ended up as after the interview. When they differ, that's the signal `/vibe-keystone:evolve-keystone` uses to tune the classifier.
+
+**Hard privacy rules for capture:**
+
+- Never write the tenant's name, the repo's name, file paths from the repo, source code, or any CLAUDE.md content. Only the structural signal above.
+- Opt-in per run. Default off.
+- Local only — no network, ever. This is the one place Keystone writes outside the repo's `CLAUDE.md`; it is disclosed in `PRIVACY.md`.
+- If the append fails for any reason, say so in one line and move on — capture never blocks the run.
 
 ---
 
