@@ -35,7 +35,7 @@ All on your local filesystem:
   structural note about that run (repo type, and which skeleton sections
   were included / dropped / overridden) — **never your code, file paths,
   repo name, or organization name.** Read back only by
-  `/vibe-keystone:evolve` to propose improvements to the skeleton. Local
+  `/vibe-keystone:evolve-keystone` to propose improvements to the skeleton. Local
   only; never transmitted. The agent appends it directly — no script is
   shipped or run.
 

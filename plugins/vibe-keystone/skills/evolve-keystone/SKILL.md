@@ -7,7 +7,7 @@ description: "This skill should be used when the user says \"/vibe-keystone:evol
 
 Slash command `/vibe-keystone:evolve-keystone`. This is Tier 1 of Keystone's evolution loop — the reflective half that reads the opt-in capture signal Tier 0 produces (`Step 6` of the keystone SKILL) and proposes concrete improvements to the skeleton and the repo-type classifier.
 
-**Nothing auto-applies.** This skill reads capture data and writes proposals to `proposed-changes.md`. It never edits the keystone SKILL itself — that's the user's call, one proposal at a time. (Mirrors the never-auto-apply discipline of `vibe-cartographer:evolve`.)
+**Nothing auto-applies.** This skill reads capture data and writes proposals to `proposed-changes.md`. It never edits the keystone SKILL itself — that's the user's call, one proposal at a time. (Mirrors the never-auto-apply discipline of `vibe-cartographer:evolve-cart`.)
 
 ## Why this exists
 
