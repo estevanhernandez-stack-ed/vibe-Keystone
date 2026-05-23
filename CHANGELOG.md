@@ -7,6 +7,23 @@ All notable changes to Vibe Keystone are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-05-23 — The capture + reflect loop
+
+The smallest evolution loop that fits a one-shot generator: an opt-in structural sensor on each run (Tier 0) plus a reflective skill that mines the captures for skeleton improvements (Tier 1).
+
+### Added
+
+- **Tier 0 — opt-in evolution capture.** A new Step 6 in the keystone skill offers, at the end of each run, to record a small anonymous structural note (repo type, and which skeleton sections were included / dropped / overridden) to `~/.claude/plugins/data/vibe-keystone/captures.jsonl`. Opt-in, off by default, local-only, agent-appended (no script shipped). Captures structure, never code or identity.
+- **Tier 1 — `/vibe-keystone:evolve-keystone`.** A new reflective skill that reads the capture log, finds patterns (sections always dropped, defaults always overridden, repo-types the classifier keeps getting wrong, sections users keep asking for), and proposes concrete skeleton/classifier edits to `proposed-changes.md`. Never auto-applies; suppressed below 5 captures. Mirrors the `vibe-cartographer:evolve` never-auto-apply discipline.
+
+### Changed
+
+- **`PRIVACY.md`** updated to disclose the opt-in capture file as the one place Keystone writes outside the repo's `CLAUDE.md`. Zero-network and zero-telemetry guarantees are unchanged — the capture is local-only and opt-in. Effective date bumped to 2026-05-23.
+
+### Notes
+
+- Together these add the smallest evolution loop that fits a one-shot generator — capture (Tier 0) + reflect (Tier 1) — without cargo-culting the full session / friction / decay stack from Cartographer. A drift-doctor over already-shipped CLAUDE.md files remains deliberately out of scope.
+
 ## [0.1.1] — 2026-04-28 — Submission-readiness polish
 
 Patch release. Metadata-only. No behavioral change.
