@@ -71,3 +71,9 @@ The unifying move: **Keystone already knows the rules — it states them as pros
 - **Wrote this proposals doc** to `C:\Users\estev\Projects\vibe-keystone\proposed-changes-harness.md` (the one file write the charter permits in this repo).
 - **Nothing else.** Per the charter's hard constraint, no shipped artifact was touched — `plugins/vibe-keystone/skills/keystone/SKILL.md`, `README.md`, `CHANGELOG.md`, `PRIVACY.md`, and `plugin.json` are all unchanged. Every proposal above is line-anchored against those files so Este can approve item-by-item without re-discovery.
 - **Verified, not assumed:** Keystone ships exactly one skill (`plugins/vibe-keystone/skills/keystone/SKILL.md`) + one `plugin.json` — no `commands/` dir, no logger skills, no scripts. The `.vibe-iterate/config.json` at repo root is from running *vibe-iterate* on this repo, **not** part of Keystone's shipped surface. PRIVACY.md confirms the read/write surface (reads repo + existing CLAUDE.md + `builder.json` read-only; writes only `CLAUDE.md`; zero network). Current shipped version is `0.1.1`.
+
+## 2026-05-23 — evolve signal: bring-your-own decision-log MCP
+
+Generated keystones should keep emitting tenant-neutral decision-log-MCP guidance (already reframed in v0.2.1 — reference "your decision-log MCP if present, 626Labs dashboard auto-detected as `mcp__626labs-cloud__*`" rather than hardcoding ours). Evolve target: a generated-keystone option to name the user's own decision-log MCP, so a produced CLAUDE.md can point at the repo owner's server tool names instead of leaving it generic. Surfaced by the 2026-05-23 sweep.
+
+status: deferred, evolve-input only.
