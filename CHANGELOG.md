@@ -7,6 +7,14 @@ All notable changes to Vibe Keystone are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+## [0.2.1] — 2026-05-23 — decision-log MCP rename + generic generated framing
+
+Patch release. Fixes a stale MCP server reference in the keystone skill — including the template it writes into other people's CLAUDE.md files.
+
+### Fixed
+
+- **Stale decision-log MCP reference (3 occurrences) in the keystone skill.** The 626Labs MCP server was renamed `626Labs` → `626labs-cloud`; the skill still referenced the old `mcp__626Labs__manage_decisions` name in the Step 1 interview options, the adaptation table, and — most importantly — the **decisions-log template emitted into generated CLAUDE.md files**. Corrected all three to `mcp__626labs-cloud__manage_decisions` and reframed the generated guidance to be generic: a decision-log MCP is optional and auto-detected (the 626Labs dashboard is the recognized instance, not a hard dependency baked into every user's keystone), with a named fallback (`decisions.md` / tracker / skip) when no such MCP is present. Keeps Keystone tenant-neutral — it generates structure for other people's repos, so its MCP guidance must not hardcode 626Labs into every produced file. See [`plugins/vibe-keystone/skills/keystone/SKILL.md`](plugins/vibe-keystone/skills/keystone/SKILL.md).
+
 ## [0.2.0] — 2026-05-23 — The capture + reflect loop
 
 The smallest evolution loop that fits a one-shot generator: an opt-in structural sensor on each run (Tier 0) plus a reflective skill that mines the captures for skeleton improvements (Tier 1).
