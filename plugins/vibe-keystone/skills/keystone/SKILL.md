@@ -47,7 +47,7 @@ Ask the user in one round (concise — single message back). Group the questions
 ### Decisions log
 
 2. **Where do significant decisions log?**
-   - `mcp__626Labs__manage_decisions log` — 626Labs Dashboard MCP (default for 626Labs repos)
+   - A decision-log MCP — if your org runs one, name it; the 626Labs pattern auto-detects the recognized `mcp__626labs-cloud__manage_decisions` dashboard when present (default for 626Labs repos)
    - A different MCP / tool (name it)
    - A `decisions.md` (or similar) file in the repo
    - An external tracker (Linear / Jira / Notion / GitHub Issues)
@@ -79,7 +79,7 @@ Carry these answers downstream as adaptations:
 |---|---|---|
 | Tech Stack & Voice (content-bearing repos) | 626Labs voice rules + brand tokens (cyan, magenta, navy, Space Grotesk, etc.) | Pull from tenant brand/voice docs. If no docs, propose a minimal voice block and ask the user to confirm. |
 | Design system reference | `~/.claude/skills/626labs-design/` | Tenant's equivalent if any; otherwise drop the section. |
-| Decisions log | `mcp__626Labs__manage_decisions log` | Whatever the user named in Q2. If "none," drop the section or point at commit/PR conventions. |
+| Decisions log | A decision-log MCP if the org runs one (the 626Labs pattern auto-detects `mcp__626labs-cloud__manage_decisions log`) | Whatever the user named in Q2. If "none," drop the section or point at commit/PR conventions. |
 | Persona inheritance note | The Architect (or whatever 626Labs has) | Tenant's persona name, or "no persona" framing. |
 
 ## Step 2 — Skeleton (sections in this order)
@@ -204,12 +204,12 @@ Use sub-headings under one parent section. Be concrete — name the actual files
 
 The shape adapts to the user's answer in Step 1 Q2.
 
-**If 626Labs Dashboard MCP:**
+**If a decision-log MCP (auto-detected — e.g. the 626Labs dashboard):**
 
 ```markdown
 ## Decisions log
 
-Significant decisions log to the **626Labs Dashboard** via MCP (`mcp__626Labs__manage_decisions log`). Tag with the bound project ID. The bar: *would future-you (or someone asking "why this approach?") want to know this in 3–6 months?*
+Significant decisions log to a decision-log MCP when one is available — the 626Labs pattern auto-detects the recognized **626Labs Dashboard** (`mcp__626labs-cloud__manage_decisions log`). It's optional: if no such MCP is present, fall back to a `decisions.md` (or your team's tracker), or skip. Never required. When logging, tag with the bound project ID. The bar: *would future-you (or someone asking "why this approach?") want to know this in 3–6 months?*
 
 Especially:
 - {category 1, repo-specific}
@@ -218,10 +218,10 @@ Especially:
 
 Skip the routine: {what doesn't get logged}.
 
-If unbound (no 626Labs project): tag with the repo name in the description and set `projectId: null`.
+If unbound (no project match): tag with the repo name in the description and set `projectId: null`.
 ```
 
-**If a different MCP / tool:** swap the tool name and any binding mechanics. Same shape, same bar.
+**If a different MCP / tool:** swap the tool name and any binding mechanics. Same shape, same bar. Keep the MCP optional — name a fallback when it's absent.
 
 **If a `decisions.md` file:**
 
