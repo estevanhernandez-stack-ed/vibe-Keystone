@@ -96,7 +96,7 @@ Once installed, type `/keystone` in any new repo to invoke. As a marketplace plu
 
 ## Part of the Vibe ecosystem
 
-One of 11 plugins in the **[Vibe Plugins](https://github.com/estevanhernandez-stack-ed/vibe-plugins)** marketplace from [626 Labs](https://626labs.dev) — foundations (Thesis Engine, Keystone) and process pillars (Cartographer, Doc, Sec, Test, Thesis, Iterate, Taker, Walk, Insights) for AI-assisted creation. Keystone is a Foundation — structural: it sets the surface every other plugin's agents stand on.
+Part of the **[Vibe Plugins](https://github.com/estevanhernandez-stack-ed/vibe-plugins)** marketplace from [626 Labs](https://626labs.dev) — foundations and process pillars for AI-assisted creation. Keystone is a Foundation — structural: it sets the surface every other plugin's agents stand on.
 
 ```text
 /plugin marketplace add estevanhernandez-stack-ed/vibe-plugins
