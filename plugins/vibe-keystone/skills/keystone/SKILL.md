@@ -202,7 +202,7 @@ Use sub-headings under one parent section. Be concrete — name the actual files
 
 ### 8. Decisions log (CONDITIONAL on Step 1 Q2 — drop entirely if user said "none")
 
-The shape adapts to the user's answer in Step 1 Q2.
+The shape adapts to the user's answer in Step 1 Q2. The optional/auto-detect/fallback framing below follows the [family decision-log convention](https://github.com/estevanhernandez-stack-ed/vibe-plugins/blob/main/docs/conventions/decision-log-backend.md) — auto-detected when present, a file or external tracker as fallback, "none" first-class; never emit text implying a specific MCP is required.
 
 **If a decision-log MCP (auto-detected — e.g. the 626Labs dashboard):**
 
@@ -295,7 +295,7 @@ Verify:
 - [ ] Every ALWAYS section is present
 - [ ] At least 3 explicit "What NOT to do" items, each repo-specific
 - [ ] References specific paths/files in this repo (not generic placeholders)
-- [ ] Decisions log section points at 626Labs MCP
+- [ ] Decisions log section matches the user's Step 1 Q2 answer (MCP auto-detected / named tool / file / external tracker / dropped if "none") — never hard-requires a specific MCP
 - [ ] No re-establishing the global persona (unless explicitly overriding)
 - [ ] No snapshot lists ("recent decisions", "current sprint") that will rot
 - [ ] Voice section present if repo has public-facing surface
