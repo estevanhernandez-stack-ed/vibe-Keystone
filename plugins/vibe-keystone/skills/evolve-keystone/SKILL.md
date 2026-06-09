@@ -1,6 +1,6 @@
 ---
 name: evolve-keystone
-description: "This skill should be used when the user says \"/vibe-keystone:evolve-keystone\" or \"/keystone:evolve-keystone\" or wants Keystone to reflect on its past runs and propose improvements to itself. Reads the opt-in capture log at ~/.claude/plugins/data/vibe-keystone/captures.jsonl, finds patterns (sections always dropped, sections always overridden, repo-types the classifier keeps getting wrong, sections users keep asking for), and proposes concrete skeleton/classifier edits to the keystone SKILL. Never auto-applies."
+description: This skill should be used when the user says '/vibe-keystone:evolve-keystone' or '/keystone:evolve-keystone' or wants Keystone to reflect on its past runs and propose improvements to itself. Reads the opt-in capture log at ~/.claude/plugins/data/vibe-keystone/captures.jsonl, finds patterns (sections always dropped, sections always overridden, repo-types the classifier keeps getting wrong, sections users keep asking for), and proposes concrete skeleton/classifier edits to the keystone SKILL. Never auto-applies.
 ---
 
 # /vibe-keystone:evolve-keystone — Reflect on past runs, propose skeleton improvements
