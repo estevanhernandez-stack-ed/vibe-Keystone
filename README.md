@@ -1,4 +1,5 @@
 <p align="center">
+  <img src="assets/brand/icon.svg" width="120" alt="vibe-keystone mark">
   <img alt="Vibe Keystone — bootstrap a 626Labs-pattern CLAUDE.md for any repo" src="https://626labs.dev/assets/brand/plugins/vibe-keystone-banner-1500x500.png" />
 </p>
 
