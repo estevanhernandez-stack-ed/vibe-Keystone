@@ -77,6 +77,26 @@ A path row survives when it carries rationale — "the load-bearing artifact is 
 
 Write real lines from the repo in front of you. Do not emit fill-in-the-blank templates with brace-delimited placeholder tokens; they constrain the shape of the output instead of communicating the criterion.
 
+## Before you write: find out what owns the file
+
+An existing `CLAUDE.md` is not always hand-authored. Writing over a generated one produces work that disappears on the next render, silently, with no error.
+
+Check before drafting:
+
+- **A generated-file header.** "GENERATED FILE — do not hand-edit", a named source template, a render command.
+- **A sibling template** — `CLAUDE.template.md`, `CLAUDE.md.tmpl`, or similar.
+- **Interpolation syntax** in a sibling — `{{...}}`, `${...}` — plus a resolver script and a manifest.
+- **A render script** in `package.json` or a Makefile: `vars:resolve`, `docs:render`, `claude:build`.
+- **Tool-injected regions** delimited by markers such as `<!-- toolname:start -->` / `<!-- toolname:end -->`. These are owned by that tool and re-injected after it next runs, often from a commit hook.
+
+When the file is generated:
+
+- **Retarget.** The template is the file to change, not the output. Regenerate afterward with the project's own command.
+- **Leave tool-owned regions alone.** They are that tool's contract, not yours. Cutting a block a hook re-injects makes the diff churn forever.
+- **Say so.** Tell the builder the file is generated, name the source and the render command, and let them decide before anything is written.
+
+A file can have more than one owner. Establish the ownership map before the first edit.
+
 ## When nothing survives: the declined verdict
 
 Some repos do not need a keystone yet. A fresh scaffold with one file has no gotchas, no divergent conventions, and no rationale — everything true about it is derivable.
