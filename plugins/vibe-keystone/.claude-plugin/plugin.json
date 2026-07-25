@@ -1,7 +1,7 @@
 {
   "name": "vibe-keystone",
-  "version": "0.2.1",
-  "description": "Bootstrap a 626Labs-pattern CLAUDE.md for any repository. The keystone is the load-bearing structural file — every agent decision in the repo rests on it. Inventories the repo, confirms scope, and produces a CLAUDE.md adapted to the repo type (code platform / marketing site / long-form writing / mixed).",
+  "version": "0.3.0",
+  "description": "Write a repo's CLAUDE.md so it earns every line. Cuts what a session can derive from ls, the manifest, or --help; keeps the gotchas, rationale, and non-standard conventions it cannot. Protects persona, voice, and taste from the trim. Proposes nested keystones for multi-surface repos, and declines to write one at all when a repo has nothing non-obvious to say yet.",
   "author": {
     "name": "626Labs LLC",
     "url": "https://github.com/estevanhernandez-stack-ed"
@@ -13,6 +13,8 @@
     "claude-md",
     "keystone",
     "bootstrap",
+    "context-engineering",
+    "progressive-disclosure",
     "tenant-aware",
     "626labs",
     "claude-code-plugin"

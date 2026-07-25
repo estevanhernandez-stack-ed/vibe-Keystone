@@ -7,6 +7,52 @@ All notable changes to Vibe Keystone are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-07-25 — The derivability rewrite
+
+**Breaking: generated keystones change shape.** The skeleton was calibrated for a model generation that needed to be told what it could already see. Claude Code's own `/doctor` now names three things to cut from a CLAUDE.md — directory layouts, tech-stack lists, architecture overviews — and those were three of Keystone's ALWAYS sections. The three it says to keep, gotchas and rationale and non-standard conventions, had no section at all.
+
+### Changed
+
+- **The generating question.** Not "which sections does this repo need" but "what would a competent agent get wrong after reading this repo?"
+- **The gate is two-axis.** Cut requires *both* that a session could derive the line (`ls`, `cat`, the manifest, `--help`) *and* that the model's default assumption would be right without it. Axis 1 is mechanical and matches `/doctor`'s criterion, read from `claude.exe` v2.1.220. Axis 2 comes from the Fable field guide's under-specification failure — thin context does not produce a model that asks, it produces one that substitutes an industry default. Uncertain on axis 2 means keep. A single-axis gate would have cut "the load-bearing artifact is `marketplace.json`" from every keystone it touched.
+- **Seven sections replace ten:** Orientation, Gotchas, Non-standard conventions, Rationale, Pointers, Decisions log, What NOT to do. **What's where, Tech Stack, Common tasks, Design system, and Voice are no longer sections** — each survives only as residue that fails the gate.
+- **The 3-item floor on "What NOT to do" is removed.** Zero is valid. A floor manufactures filler, and "don't commit secrets" is the filler it manufactured.
+- **A gotcha has a definition:** an *unknown known*, obvious once named and invisible until then. If you cannot name the failure mode, it is not a gotcha.
+- **Keystone's own SKILL: 390 lines to 82**, plus an eight-file `references/` tree. Always-loaded surface down 79 percent; total content is larger, and the win is that depth now loads only when needed. The dozen fill-in-the-blank template blocks are gone — criterion plus one real exemplar replaces them.
+- **The tenant interview reads inherited docs twice**, as a source and as an exclusion list. A repo keystone that repeats the global file creates two copies that drift.
+- **Repo types no longer map to sections.** The gate decides sections; types tell you where to look for gotchas.
+
+### Added
+
+- **The protected-content guard.** Persona, voice, taste, priorities, and brand fail the gate by construction, which is exactly why they are worth writing down. Three prongs: the gate has no authority over human-supplied context; protected content routes by frequency of need and is never deleted for length; dedup points at the canonical copy and never deletes the last one. Inside a persona, **identity is not procedure** — a long persona is often a short identity carrying a lot of restated process.
+- **Nested keystones and skill extraction** as first-class destinations, with the loading model verified rather than assumed. Nested files are location-gated; skills are invocable anywhere; they are not interchangeable.
+- **A line budget** — ~50 target, ~100 ceiling for a root file. Explicitly soft: a gotcha is never cut to hit it, and a 40-line file of derivable content still fails.
+- **The declined verdict.** When a repo yields no gotchas, conventions, or rationale, Keystone says so and writes nothing rather than emitting empty headings.
+- **`references/file-ownership.md`.** An existing CLAUDE.md may be generated or tool-owned; a diff against a generated file looks completely normal and the work vanishes on the next render. Covers generated-file detection, tool-owned marker regions (matched on lines that *are* the marker, never by substring), and the colonized case where every owner is something else.
+- **Capture at `schema_version: 2`** — seven-name section vocabulary, `run_type: "declined"`, plus `nested_proposed` / `skills_proposed` / `root_line_count` so `evolve-keystone` can see whether progressive disclosure gets used and whether the budget holds.
+
+### Fixed
+
+- **`evolve-keystone`** retargeted at the reference tree, and taught that v1 and v2 captures use different section vocabularies and must never be pooled when aggregating section rates.
+
+### Validated on
+
+Five real keystones across the estate, which found five defects that would have shipped:
+
+| Repo | Before | After |
+|---|---|---|
+| `vibe-plugins` | 147 | 46 |
+| `Project-626Labs-1` | 302 | dry run, 191-line template → 71 |
+| `Celestia3` | 205 | 140 (authored; it had no keystone at all) |
+| `vibe-cartographer` | 204 | 152 (hand-authored 103 → 51) |
+| `Projects` | 90 | 52 |
+
+The dogfood found: Keystone would silently overwrite generated CLAUDE.md files; a naive surface sweep proposes nested keystones into git worktrees; marker regions identified by substring destroy the block they meant to protect; a persona's restated procedure needed splitting from its identity; and a repo can have a long CLAUDE.md containing nothing about itself.
+
+It also proved the `/doctor` boundary empirically. Classifying `Project-626Labs-1` surfaced that two different VS Code extensions live in that repo — a fact about the repo, absent from the file, that `/doctor` could not have found. Keystone regenerates from the repo and can add; `/doctor` trims the file and can only subtract.
+
+Full record: [`docs/v0.3-migration-friction.md`](docs/v0.3-migration-friction.md).
+
 ## [0.2.1] — 2026-05-23 — decision-log MCP rename + generic generated framing
 
 Patch release. Fixes a stale MCP server reference in the keystone skill — including the template it writes into other people's CLAUDE.md files.
