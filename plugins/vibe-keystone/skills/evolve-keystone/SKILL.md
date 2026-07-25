@@ -20,8 +20,10 @@ Keystone produces the load-bearing context file, then never sees it again — so
 
 ## Before You Start
 
-- **Read the capture log:** `~/.claude/plugins/data/vibe-keystone/captures.jsonl`. Each line is one opt-in run capture (schema in the keystone SKILL's Step 6).
-- **Read the current skeleton:** `plugins/vibe-keystone/skills/keystone/SKILL.md` — Step 2 (the section skeleton) and Step 0 (the classifier signals). Proposals must point at real locations in this file.
+- **Read the capture log:** `~/.claude/plugins/data/vibe-keystone/captures.jsonl`. Each line is one opt-in run capture (schema in `skills/keystone/references/capture.md`).
+  - **Entries carry `schema_version` 1 or 2 and their section vocabularies do not match.** v1 names the pre-v0.3 ten-section skeleton; v2 names the seven current sections. **Never pool v1 and v2 when aggregating section drop or override rates** — the resulting percentages would be meaningless. Aggregate them separately and report v2 as the live signal. Classifier-miss rates (`repo_type_autodetected` vs `repo_type_final`) and requested-but-missing clustering stay valid across both versions.
+  - v2 adds `nested_proposed`, `skills_proposed`, and `root_line_count`, plus `run_type: "declined"` for runs that rendered the not-yet-worth-a-keystone verdict. Declined runs are signal: a classifier that declines too often, or never, is worth a proposal.
+- **Read the current skeleton:** the section skeleton lives in `plugins/vibe-keystone/skills/keystone/references/skeleton.md`, the classifier signals in `references/repo-types.md`, and the cut/keep gate in `references/derivability-test.md`. `SKILL.md` is now a ~80-line entry point that points at these. Proposals must name a real location in the reference tree, not a step number in `SKILL.md`.
 
 ## Suppression — not enough signal yet
 
@@ -48,7 +50,7 @@ Then stop. Proposing from 1-2 runs would be noise dressed as insight.
 
 4. **Write proposals** to `proposed-changes.md` at the repo root (append a dated section if the file already exists — Keystone's harness task force already uses `proposed-changes-harness.md`, so keep this one named `proposed-changes.md`). For each proposal:
    - The pattern and its evidence (rate, run count, confidence).
-   - The exact skeleton/classifier location it maps to (`Step 2 §<section>` or `Step 0 classification`).
+   - The exact location it maps to — a named section in `references/skeleton.md`, `references/repo-types.md`, `references/derivability-test.md`, or another reference file.
    - The concrete edit proposed.
    - A one-line "why it pays."
 

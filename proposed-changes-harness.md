@@ -2,7 +2,7 @@
 
 > Workstream A of the Harness Engineering task force. Authored 2026-05-21 (The Architect, autonomous research run).
 > Operating contract: [`harness-task-force-charter.md`](../vibe-cartographer/docs/horizon/harness-task-force-charter.md). Findings source: [`harness-engineering-comparison.md`](../vibe-cartographer/docs/horizon/harness-engineering-comparison.md).
-> **Status: PROPOSALS ONLY.** Nothing in the shipped SKILL was edited. This is the only file written.
+> **Status as of 2026-07-25 (v0.3.0): three of four resolved.** Proposal #2 (map-not-encyclopedia + freshness) became the core of the v0.3 derivability rewrite — the "map" discipline is now the two-axis gate plus a line budget, and the dangling-pointer check is item 8 of the self-check. Proposal #3 (repo-as-system-of-record) shipped earlier as the Knowledge & taste section and is now carried by Pointers. Proposal #4 shipped as Tier 0 opt-in capture plus the Tier 1 `evolve-keystone` skill; Tier 2 (drift detection on shipped keystones) remains deliberately out of scope and is arguably `/doctor`'s territory. **Proposal #1 (executable output validator) stays parked** — v0.3 keeps every check agent-run to hold the zero-scripts promise in `PRIVACY.md`. The proposal bodies below are unedited 2026-05-21 research and are kept as written.
 
 ## Summary
 

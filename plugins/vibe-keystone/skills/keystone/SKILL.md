@@ -1,390 +1,82 @@
 ---
 name: keystone
-description: Bootstrap a CLAUDE.md from the 626Labs project-CLAUDE pattern, with tenant-aware adaptation. Interviews the user for org / decision surface / voice rules / persona before drafting, so the produced file reflects THEIR conventions — not 626Labs defaults baked in. The keystone is the load-bearing structural file — every agent decision in the repo rests on it. Use when starting in a new repo without a CLAUDE.md, or when the existing one is stale. Trigger phrases include "set up CLAUDE.md", "create the keystone", "bootstrap claude md", "claude md for this repo", "/keystone".
+description: Write a repo's CLAUDE.md so it earns every line — gotchas, rationale, and non-standard conventions, not a directory listing the agent could produce itself. Interviews for tenant context first, so the file encodes THEIR conventions rather than baked-in defaults. Use when starting in a repo without a CLAUDE.md, or when the existing one has gone fat or stale. Trigger phrases include "set up CLAUDE.md", "create the keystone", "bootstrap claude md", "claude md for this repo", "/keystone".
 ---
 
-# Keystone — bootstrap a 626Labs-pattern CLAUDE.md
+# Keystone
 
-You are an agent in a 626Labs-owned (or 626Labs-style) repository. Your task is to produce a `CLAUDE.md` for this repo following the 626Labs project-CLAUDE pattern. Read this entire skill before writing anything.
+You are writing the `CLAUDE.md` that every agent decision in this repo will rest on. Get it right.
 
-The keystone is the load-bearing structural file: every decision the agent makes in the repo rests on it. Get it right.
+The question is not "which sections does this repo need." It is **what would a competent agent get wrong after reading this repo?** Everything else is the agent's own `ls` read back to it, and every session pays for it.
 
-## Step 0 — Refuse to write blind
+## The gate
 
-Before producing the file, inventory the repo:
+Two questions per line. **Both must be yes to cut:**
 
-1. `git status` and `git log --oneline -20` — branch state + recent rhythm
-2. `ls -la` — top-level layout
-3. Read `package.json`, `pyproject.toml`, `Cargo.toml`, or whatever defines the stack
-4. Read existing `README.md` and any top-level `*.md` files
-5. Check for: `.claude/`, `.husky/`, `.github/workflows/`, `scripts/`, `docs/`, `.ai/`
-6. Look for build/deploy infra: `Makefile`, `Dockerfile`, GitHub Actions, etc.
-7. **If `CLAUDE.md` already exists**, read it before overwriting. Do not blindly replace.
+1. **Derivable?** Could a session get this from `ls`, reading a file, reading the manifest, or `--help`?
+2. **Default correct?** If the line were gone, would the model's default assumption be right?
 
-Identify the repo type:
+Uncertain on the second means keep. Full rule, provenance, and worked examples: [`references/derivability-test.md`](references/derivability-test.md).
 
-- **Code platform** (services, apps, libraries, plugins)
-- **Marketing/content site** (public-facing, copy-heavy)
-- **Long-form writing / thesis** (prose-heavy, citation-bound)
-- **Infrastructure / mixed** (multiple surfaces)
+## The guard
 
-## Step 1 — Tenant interview before drafting
+The gate governs facts from the codebase. It has **no authority** over persona, voice, taste, priorities, or brand — that content fails the gate by construction, which is exactly why it is worth writing down. Never cut it for length; route it by how often it is needed. Inside a persona, identity is not procedure. Three prongs: [`references/protected-content.md`](references/protected-content.md).
 
-Before a CLAUDE.md is meaningful, you need to know whose conventions it should encode. This skill ships with **626Labs defaults** baked in (Dashboard MCP for decisions, 626Labs voice rules, brand tokens, Architect persona inheritance) — but those should only land when the user is actually 626Labs. For any other tenant, ask first.
+## Flow
 
-Ask the user in one round (concise — single message back). Group the questions and let them skip ones that don't apply:
+### 1. Inventory — refuse to write blind
 
-### Tenant identity
+`git status`, `git log --oneline -20`, top-level layout, the stack manifest, the README, `.claude/`, `.github/workflows/`, `docs/`.
 
-1. **Whose repo is this — 626Labs, another organization, an individual project?**
+**Find out what owns any existing `CLAUDE.md` before planning to touch it** — generated-file headers, sibling templates, render scripts, tool-owned marker regions. A diff against a generated file looks completely normal and the work vanishes on the next render. See [`references/skeleton.md`](references/skeleton.md).
 
-   If 626Labs: the defaults apply (Dashboard MCP, brand voice, Architect persona). Skip to question 4.
+Detect multi-surface repos here: workspace manifests, multiple app roots, distinct deploy targets. Verify surfaces against the actual tree; worktrees and archives are not surfaces.
 
-   If another tenant, follow up:
-   - What's the organization or individual name? (Used in references throughout the produced CLAUDE.md.)
-   - **Do you have tenant docs I should read before drafting?** Examples: a global `~/.claude/CLAUDE.md` defining a persona, an org `HANDBOOK.md`, a `CONTRIBUTING.md`, a `VALUES.md` / principles doc, a brand voice guide, a style guide, an architecture doc. **Name the paths and I'll read them before drafting** — your priorities, voice rules, and conventions should fold into the produced file.
+Classify the repo type to aim the search — [`references/repo-types.md`](references/repo-types.md).
 
-### Decisions log
+### 2. Interview
 
-2. **Where do significant decisions log?**
-   - A decision-log MCP — if your org runs one, name it; the 626Labs pattern auto-detects the recognized `mcp__626labs-cloud__manage_decisions` dashboard when present (default for 626Labs repos)
-   - A different MCP / tool (name it)
-   - A `decisions.md` (or similar) file in the repo
-   - An external tracker (Linear / Jira / Notion / GitHub Issues)
-   - None — decisions live in commit messages and PR descriptions only
+Whose repo, where decisions log, persona inheritance, work mode, existing agents. Read any tenant docs they name **twice**: as a source, and as an exclusion list. [`references/tenant-interview.md`](references/tenant-interview.md).
 
-### Persona
+### 3. Draft
 
-3. **Persona inheritance:**
-   - **Inherit from global** — does `~/.claude/CLAUDE.md` define a persona this repo should reference (e.g., 626Labs's "The Architect")? If yes, the produced CLAUDE.md will say "inherits {name}, no need to re-establish."
-   - **Override** — does this repo need its own persona that supersedes global (typical for writing/thesis where Lead Writer takes over)?
-   - **No persona** — the repo doesn't operate under a named persona; skip the persona block entirely.
+Seven sections, gate every line, route what passes but is not needed every task: [`references/skeleton.md`](references/skeleton.md) and [`references/progressive-disclosure.md`](references/progressive-disclosure.md).
 
-### Repo type and existing agents
+Target ~50 lines, ceiling ~100, for the root file. The ceiling is soft and a gotcha is never cut to hit it — the budget squeezes derivable content only.
 
-4. **Primary work mode:** code platform / marketing-content / writing-thesis / infrastructure-mixed
-5. **Existing `.claude/agents/`?** — list them, or "propose new ones based on the repo type."
+If nothing survives for gotchas, conventions, or rationale, render the **declined verdict** and write nothing. Some repos do not need a keystone yet.
 
-### If refreshing an existing CLAUDE.md
+### 4. Self-check
 
-If `CLAUDE.md` already exists, also ask: keep the existing persona/voice/structure and refresh the rest, or rewrite section-by-section?
+- [ ] Every line passes the gate, or is protected content
+- [ ] Protected content was relocated, never deleted, and its pointers resolve
+- [ ] Nothing restates the inherited global or tenant file, unless this repo is its canonical home
+- [ ] Root file is within budget, or the overflow has a named destination
+- [ ] Gotchas is non-empty and every item names a real failure mode
+- [ ] Multi-surface repos got a nested-keystone proposal
+- [ ] No snapshot lists that rot — describe how to find state, never enumerate it
+- [ ] Every referenced path exists on disk
 
----
+### 5. Propose, don't create
 
-After the user answers, **read any tenant docs they named before drafting**. Tenant priorities, voice rules, and decision-log conventions should fold into the produced CLAUDE.md instead of inheriting 626Labs defaults that don't apply.
+Write the root `CLAUDE.md` and nothing else. Nested keystones, skills, `.claude/agents/`, `.claude/rules/`, and `.claude/hooks/` are proposals the builder accepts or declines.
 
-Carry these answers downstream as adaptations:
+### 6. Capture
 
-| Section | 626Labs default | Other tenant — substitute |
-|---|---|---|
-| Tech Stack & Voice (content-bearing repos) | 626Labs voice rules + brand tokens (cyan, magenta, navy, Space Grotesk, etc.) | Pull from tenant brand/voice docs. If no docs, propose a minimal voice block and ask the user to confirm. |
-| Design system reference | `~/.claude/skills/626labs-design/` | Tenant's equivalent if any; otherwise drop the section. |
-| Decisions log | A decision-log MCP if the org runs one (the 626Labs pattern auto-detects `mcp__626labs-cloud__manage_decisions log`) | Whatever the user named in Q2. If "none," drop the section or point at commit/PR conventions. |
-| Persona inheritance note | The Architect (or whatever 626Labs has) | Tenant's persona name, or "no persona" framing. |
+Opt-in, default off, local only. Ask once, after the file lands: [`references/capture.md`](references/capture.md).
 
-## Step 2 — Skeleton (sections in this order)
+## Output
 
-Produce a `CLAUDE.md` with these sections. Drop sections marked CONDITIONAL when they don't apply.
-
-### 1. Title + persona inheritance note (ALWAYS, conditional on Step 1 Q3)
-
-If the user said **inherit from global**:
-
-```markdown
-# {Repo Name}
-
-> **Persona:** This repo inherits {global persona name from Step 1} from `~/.claude/CLAUDE.md`. No need to re-establish — just adds project context below.
-```
-
-If the user said **override** (writing/thesis case):
-
-```markdown
-> **Persona override:** In this repo, you operate as {Project Persona} — not the global one. {Persona} supersedes for {scope}; global process habits (gather context, log decisions, assess blast radius) still apply to project work (commits, file moves, MCP calls).
-```
-
-If the user said **no persona** at all, drop the blockquote entirely. Just the `# {Repo Name}` title.
-
-### 2. Tech Stack (ALWAYS) — paired with Voice for content-heavy repos
-
-For a code-only repo:
-
-```markdown
-## Tech Stack
-
-- **Language/Framework:** {actual}
-- **Build:** {actual}
-- **Deploy:** {actual}
-- **Testing:** {actual}
-```
-
-For any public-facing / content-bearing repo, add a Voice section.
-
-**If 626Labs-owned (Step 1 Q1):**
-
-```markdown
-## Tech Stack & Voice
-
-- **Stack:** {as above}
-- **Brand:** Cyan `#17d4fa` + magenta `#f22f89`, always paired. Navy `#0f1f31` field. Space Grotesk display, Inter body, JetBrains Mono code/meta (uppercase + 0.12em tracking on small labels).
-- **Voice:** Builder-to-builder, second person, sentence case. No "empower / leverage / seamlessly / unlock / unleash." Em-dashes welcome. No emoji in UI copy or marketing surfaces. Tagline: *Imagine Something Else.*
-```
-
-**If another tenant:** pull voice rules + brand tokens from any tenant docs the user named in Step 1. Match the tenant's existing brand voice rather than inventing one. If no tenant voice docs exist, write a minimal block and ask the user to confirm or extend:
-
-```markdown
-## Tech Stack & Voice
-
-- **Stack:** {as above}
-- **Voice:** {tenant-provided voice rules, OR — if none — a minimal "builder-to-builder, second person, no corporate speak" placeholder for the user to extend}
-- **Brand:** {tenant-provided tokens, OR — if none — note "no brand tokens established"}
-```
-
-### 3. Design system reference (CONDITIONAL — visual repos AND a design skill exists)
-
-**If 626Labs-owned:**
-
-```markdown
-## Design system
-
-Canonical brand spec lives at `~/.claude/skills/626labs-design/` (globally available — same skill across every 626 Labs repo). Use `colors_and_type.css` as the token source and `ui_kits/` as the pattern reference. Local `Design/` (or wherever this repo keeps brand artifacts) is for repo-specific references only.
-```
-
-**If another tenant with their own design skill / system docs:** point at their canonical brand spec the same way.
-
-**If no tenant design system exists:** drop this section entirely. Don't fabricate a reference.
-
-### 4. What's Where (ALWAYS)
-
-A markdown table with paths and one-line purposes. One row per major directory or load-bearing file. Anyone should find anything in 5 seconds.
-
-```markdown
-## What's where
-
-| Path | What it is |
-|---|---|
-| `src/` | {one line} |
-| `scripts/` | {one line} |
-| ... |
-```
-
-### 5. Domain-specific section (CONDITIONAL — every repo has one)
-
-This is the operational center of gravity. Pick what applies:
-
-- **Code platform:** MCP server / infrastructure / API surface / federation pattern
-- **Site:** How the site rebuilds, bot workflows
-- **Writing:** Mode switching (THESIS_MODE), citation discipline
-- **Mixed:** A "How the system works at runtime" overview
-
-Use sub-headings under one parent section. Be concrete — name the actual files, scripts, workflows, and triggers.
-
-### 6. Common tasks (ALWAYS)
-
-```markdown
-## Common tasks
-
-| You want to… | Path / command |
-|---|---|
-| {task} | {how} |
-```
-
-5–10 rows covering the most frequent operations.
-
-### 7. Conventions (ALWAYS)
-
-```markdown
-## Conventions
-
-- **Commits:** Conventional commits ({list types — for thesis repos use academic-flavored: draft / revise / cite / respond / meta / chore})
-- **Style:** {brief, stack-specific}
-- **File rules:** {what's read-only, what's generated, what's the canonical source}
-```
-
-### 8. Decisions log (CONDITIONAL on Step 1 Q2 — drop entirely if user said "none")
-
-The shape adapts to the user's answer in Step 1 Q2. The optional/auto-detect/fallback framing below follows the [family decision-log convention](https://github.com/estevanhernandez-stack-ed/vibe-plugins/blob/main/docs/conventions/decision-log-backend.md) — auto-detected when present, a file or external tracker as fallback, "none" first-class; never emit text implying a specific MCP is required.
-
-**If a decision-log MCP (auto-detected — e.g. the 626Labs dashboard):**
-
-```markdown
-## Decisions log
-
-Significant decisions log to a decision-log MCP when one is available — the 626Labs pattern auto-detects the recognized **626Labs Dashboard** (`mcp__626labs-cloud__manage_decisions log`). It's optional: if no such MCP is present, fall back to a `decisions.md` (or your team's tracker), or skip. Never required. When logging, tag with the bound project ID. The bar: *would future-you (or someone asking "why this approach?") want to know this in 3–6 months?*
-
-Especially:
-- {category 1, repo-specific}
-- {category 2}
-- {3–5 categories total}
-
-Skip the routine: {what doesn't get logged}.
-
-If unbound (no project match): tag with the repo name in the description and set `projectId: null`.
-```
-
-**If a different MCP / tool:** swap the tool name and any binding mechanics. Same shape, same bar. Keep the MCP optional — name a fallback when it's absent.
-
-**If a `decisions.md` file:**
-
-```markdown
-## Decisions log
-
-Significant decisions land in `decisions.md` (or `docs/decisions/` for ADR-style). Each entry: date, title, context, decision, consequences. The bar: *would future-you want to know this in 3–6 months?*
-
-Categories worth logging: {repo-specific list}. Skip the routine.
-```
-
-**If an external tracker (Linear / Jira / Notion / GitHub Issues):** point at the tracker, link to the project/board, name the labels or convention used to mark "decision" entries.
-
-**If "none":** drop this section entirely. Don't fabricate a decision-log surface that doesn't exist. Optionally add a one-line note in the Conventions section: "Significant decisions are captured in commit messages and PR descriptions; no separate decision log."
-
-### 8b. Knowledge & taste — repo as system of record (CONDITIONAL — repos with tacit conventions worth capturing)
-
-The agent only sees what's in the repo. Taste, "we don't do it that way here," the reasoning that lives in Slack threads and someone's head — none of it reaches the agent unless it's written down where the agent reads. For any repo with real tacit conventions, designate an in-repo home for them and name it here.
-
-```markdown
-## Knowledge & taste
-
-The repo is the system of record — if it isn't written here, the agent can't see it.
-
-- **Conventions / taste:** {path — e.g., `docs/conventions.md`, or this file's Conventions section}
-- **Why-decisions:** {the decisions-log surface named above}
-- **Things the agent keeps getting wrong:** capture the correction as a short note in {path} the moment it surfaces, instead of re-explaining it every session.
-```
-
-Drop this section when the repo has no tacit conventions beyond what Conventions already covers (most greenfield or solo scratch repos). Don't manufacture a knowledge base that doesn't exist.
-
-### 9. What NOT to do (ALWAYS)
-
-3–5+ explicit, repo-specific guardrails. Each one names the failure mode and (where useful) the right alternative.
-
-```markdown
-## What NOT to do
-
-- **Don't {specific thing}** — {why, or what to do instead}
-- ...
-```
-
-Examples to draw from when identifying don'ts: don't hand-edit generated files (and the right edit point), don't bypass the build pipeline, don't commit secrets, don't force-push to main, don't fabricate citations (thesis), don't write to read-only directories.
-
-### 10. References (CONDITIONAL — when any of these exist)
-
-```markdown
-## References
-
-- Architecture details: {path}
-- Modular rules: `.claude/rules/`
-- Specialized agents: `.claude/agents/` (see `agents/README.md`)
-- Session hooks: `.claude/hooks/`
-- CI/CD: `{path}`
-```
-
-## Step 3 — Output discipline
-
-- File: `CLAUDE.md` at repo root
-- Headings: ATX (`#`, `##`, `###`)
-- Prose: terse, action-first
-- No emoji in file content
-- Em-dashes welcome
-- Code fences for commands; markdown tables for paths/tasks/conventions
-- Voice: builder-to-builder, second person, no hedging, no corporate speak
-
-## Step 4 — Self-check before claiming done
-
-Verify:
-
-- [ ] Every ALWAYS section is present
-- [ ] At least 3 explicit "What NOT to do" items, each repo-specific
-- [ ] References specific paths/files in this repo (not generic placeholders)
-- [ ] Decisions log section matches the user's Step 1 Q2 answer (MCP auto-detected / named tool / file / external tracker / dropped if "none") — never hard-requires a specific MCP
-- [ ] No re-establishing the global persona (unless explicitly overriding)
-- [ ] No snapshot lists ("recent decisions", "current sprint") that will rot
-- [ ] Voice section present if repo has public-facing surface
-
-## Step 5 — Propose follow-ups (don't auto-create)
-
-After the CLAUDE.md lands, propose:
-
-- `.claude/agents/` candidates that would serve recurring tasks in this repo (code-reviewer, security-auditor, copy-reviewer, visual-asset-reviewer, citation-checker, devils-advocate, story-editor, etc. — pick what fits)
-- `.claude/rules/` files for specialized guidance that doesn't fit in CLAUDE.md
-- `.claude/hooks/` for automation that closes a feedback loop (template-edit drift checks, type-check-after-edit, etc.)
-
-Each suggestion is a proposal. The user decides what gets built.
-
-## Step 6 — Capture for evolution (opt-in, off by default)
-
-Keystone is a one-shot generator — it writes a great file and never sees it again, so on its own it can't learn which parts of the skeleton it keeps getting wrong. This step is the smallest possible sensor that fixes that, and it is **strictly opt-in**.
-
-After the CLAUDE.md lands, ask once:
-
-> "Want me to record a small, anonymous note about what this run produced, so `/vibe-keystone:evolve-keystone` can spot patterns and improve the skeleton over time? It's local-only, opt-in, and captures structure — never your code or your org's name. [y/N]"
-
-Default is no. A "no" — or no answer — writes nothing.
-
-**Only if the user says yes**, append one JSON line to `~/.claude/plugins/data/vibe-keystone/captures.jsonl` (create the directory if absent). The agent performs this append directly — **Keystone ships no scripts**, and this step does not introduce one. Capture exactly this shape, and nothing more:
-
-```json
-{
-  "schema_version": 1,
-  "timestamp": "<ISO local datetime>",
-  "run_type": "fresh | refresh",
-  "tenant_kind": "626labs | other-org | individual",
-  "repo_type_autodetected": "code | marketing-content | long-form-writing | infra-mixed",
-  "repo_type_final": "code | marketing-content | long-form-writing | infra-mixed",
-  "sections_included": ["title", "tech-stack", "what-where"],
-  "sections_dropped": ["design-system", "decisions-log"],
-  "sections_overridden": [{ "section": "persona", "from_default": "inherit", "to": "override" }],
-  "sections_requested_not_in_skeleton": ["<free-text label of a section the user asked for that the skeleton doesn't offer>"]
-}
-```
-
-`repo_type_autodetected` is your Step 0 classification; `repo_type_final` is what it ended up as after the interview. When they differ, that's the signal `/vibe-keystone:evolve-keystone` uses to tune the classifier.
-
-**Hard privacy rules for capture:**
-
-- Never write the tenant's name, the repo's name, file paths from the repo, source code, or any CLAUDE.md content. Only the structural signal above.
-- Opt-in per run. Default off.
-- Local only — no network, ever. This is the one place Keystone writes outside the repo's `CLAUDE.md`; it is disclosed in `PRIVACY.md`.
-- If the append fails for any reason, say so in one line and move on — capture never blocks the run.
-
----
-
-## Repo type quick reference
-
-**Code platform:**
-
-- Tech Stack only (no Voice section unless platform also has marketing surface)
-- Domain section: architecture, MCP, federation pattern, infrastructure
-- Conventions emphasize type safety, testing, styling
-- "What NOT to do": code-quality + deployment guardrails
-
-**Marketing / content site:**
-
-- Tech Stack & Voice combined (voice is load-bearing)
-- Add Design system section
-- Domain section: rebuild pipeline, bot workflows, asset flow
-- "What NOT to do": content/build pipeline + brand discipline
-
-**Long-form writing / thesis:**
-
-- Persona override clause is mandatory
-- Add Citation discipline section
-- Mode switching (if template-driven)
-- Academic-flavored commits (draft / revise / cite / respond / meta)
-- "What NOT to do": fabrication + scope creep + manifest discipline
-
-**Infrastructure / mixed:**
-
-- Tech Stack covers all surfaces
-- Domain section: runtime model + cross-surface coordination
-- "What NOT to do": cross-surface coordination guardrails
-
----
+`CLAUDE.md` at repo root. ATX headings. Terse, action-first, second person. Code fences for commands, tables for anything tabular. No emoji. Em-dashes minimal — commas, periods, colons carry most of the load.
 
 ## What you do not do
 
-- Do not write CLAUDE.md without inventorying the repo first. Blind writes produce generic, useless files.
-- Do not re-establish the global persona unless explicitly overriding. The global Architect / Stitch / whatever already loads; the repo CLAUDE.md adds project context, doesn't restate identity.
-- Do not list "current state" or "recent decisions" snapshot-style. Those rot. Always describe how to *find* state, never enumerate the current values.
-- Do not include voice rules without a public-facing surface to apply them to. Code-only platforms don't need the brand voice section.
-- Do not auto-create `.claude/agents/`, `.claude/rules/`, or `.claude/hooks/`. Propose them; let the user decide.
-- Do not overwrite an existing CLAUDE.md without showing a diff and confirming.
+- **Don't write blind.** Inventory first. Blind writes produce generic files.
+- **Don't write over a generated file.** Retarget its template, leave tool-owned regions alone, and say so before writing.
+- **Don't restate the global persona** unless explicitly overriding. The global file already loads; this one adds project context.
+- **Don't enumerate current state.** No "recent decisions", no "current sprint", no counts that drift. Describe how to find state.
+- **Don't cut protected content to hit a budget.** Relocate it and leave a pointer.
+- **Don't manufacture guardrails to fill a section.** There is no minimum. "Don't commit secrets" is not a gotcha.
+- **Don't auto-create anything but the root file.**
+- **Don't overwrite an existing `CLAUDE.md`** without showing a diff and confirming.
+- **Don't rightsize an existing file in place** — that is `/doctor`'s job. Keystone regenerates from the repo, which means it can surface a trap nobody wrote down; `/doctor` trims the file, which means it can only remove what is already there. Different inputs, different jobs.
