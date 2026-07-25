@@ -1,6 +1,6 @@
 # Privacy Policy — Vibe Keystone
 
-**Effective:** 2026-05-23
+**Effective:** 2026-07-25 (v0.3.0)
 **Plugin:** vibe-keystone
 **Author:** 626Labs LLC
 
@@ -32,9 +32,10 @@ All on your local filesystem:
 - **`~/.claude/plugins/data/vibe-keystone/captures.jsonl`** — an
   **opt-in, off-by-default** capture log. Written only when you explicitly
   say yes at the end of a `/keystone` run. Each line is an anonymous
-  structural note about that run (repo type, and which skeleton sections
-  were included / dropped / overridden) — **never your code, file paths,
-  repo name, or organization name.** Read back only by
+  structural note about that run: the repo type, which skeleton sections
+  were included / dropped / overridden, how many nested keystones and
+  skills were proposed, and the produced file's line count — **never your
+  code, file paths, repo name, or organization name.** Read back only by
   `/vibe-keystone:evolve-keystone` to propose improvements to the skeleton. Local
   only; never transmitted. The agent appends it directly — no script is
   shipped or run.
