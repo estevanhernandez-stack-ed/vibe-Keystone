@@ -53,6 +53,15 @@ Detect during inventory. Signals:
 
 When detected, propose a thin root plus per-surface nested keystones. **Verify the surfaces against the actual tree before proposing them** — infer boundaries from what is there, not from what the repo's name suggests.
 
+**Not every directory holding a `CLAUDE.md` or a manifest is a surface.** Exclude before proposing:
+
+- `.worktrees/` and any other git-worktree root — these are whole checkouts of the same repo, and each carries a full copy of every file
+- `_old-*`, `_archive*`, `legacy/`, and similar archive directories
+- `node_modules/`, `vendor/`, `dist/`, `build/`, and other generated or vendored trees
+- Directories that duplicate a sibling rather than owning a distinct surface
+
+A naive "find every directory with a manifest" sweep proposes nested keystones into worktrees, which means the same guidance written four times into four checkouts of one repo. Check what a candidate directory *is* before treating it as a surface.
+
 **Propose, never auto-write.** Only the root `CLAUDE.md` is written. Nested files, skills, agents, rules, and hooks are proposals the builder accepts or declines.
 
 ## The budget

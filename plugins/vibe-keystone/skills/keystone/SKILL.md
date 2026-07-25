@@ -28,7 +28,7 @@ The gate governs facts from the codebase. It has **no authority** over persona, 
 
 `git status`, `git log --oneline -20`, top-level layout, the stack manifest, the README, `.claude/`, `.github/workflows/`, `docs/`.
 
-**Find out what owns any existing `CLAUDE.md` before planning to touch it** — generated-file headers, sibling templates, render scripts, tool-owned marker regions. A diff against a generated file looks completely normal and the work vanishes on the next render. See [`references/skeleton.md`](references/skeleton.md).
+**Find out what owns any existing `CLAUDE.md` before planning to touch it** — generated-file headers, sibling templates, render scripts, tool-owned marker regions. A diff against a generated file looks completely normal and the work vanishes on the next render. See [`references/file-ownership.md`](references/file-ownership.md).
 
 Detect multi-surface repos here: workspace manifests, multiple app roots, distinct deploy targets. Verify surfaces against the actual tree; worktrees and archives are not surfaces.
 
