@@ -135,3 +135,28 @@ Each gate carries an explicit stop condition. Item 4's is the sharpest: *if the 
 **Active shaping:** none. Este invoked `/checklist` and let it run. All decisions agent-side, surfaced here.
 
 **Open:** the spec-bank document at `vibe-plugins/docs/spec-bank/vibe-keystone-v0.3.md` still states the superseded single-axis gate and is missing the four `/prd` corrections plus the `/doctor` boundary resolution. Back-merge is item 11, not deferred past ship.
+
+## /build
+
+Thirteen items, all closed. Three dogfood gates at items 4, 6, and 9 per the checklist's reordering. Fourteen findings recorded in `docs/v0.3-migration-friction.md`; five were defects that would have shipped.
+
+Two deliberate deviations, both recorded rather than taken silently:
+
+- **Gate 2 became a dry run.** `Project-626Labs-1/CLAUDE.md` is generated from a template by a 34KB resolver, plus a tool-injected block. Applying a migration there would have been erased on the next render. Este's call: dry run only, since the gate's job was validating nested-keystone logic and a dry run does that completely without editing a flagship's render chain.
+- **Item 13 ran before item 12.** The template puts documentation and security verification last, after tag-and-promote. Verifying a release after moving the stable ref is backwards. Ran the verification first.
+
+One agent error, caught pre-commit: the first `vibe-cartographer` splice located its tool-owned region by substring, matched the marker mentioned in prose rather than the real delimiter, and replaced a 101-line block with a sentence fragment. Restored with `git checkout`, redone line-anchored with a size assertion. Nothing committed in the broken state. Became F-12 and a shipped rule.
+
+Scope addition at Este's request, built before the tag rather than deferred to a patch: a shape-change warning, so a v0.2-shaped file meeting v0.3 does not present as the tool eating someone's work. Detected from the file's own headings, so it costs no state and does not touch the zero-scripts or write-surface promises.
+
+## /reflect
+
+Full retro in `docs/reflection.md`. Three patterns went to the unified profile:
+
+- **(jjj) Cadence is a function of terrain novelty, not a fixed preference.** Este confirmed 14 check-ins was right *for this project* because Opus 5 had shipped the day before and the work was adapting a tool to that model generation. Same principle already recorded for deepening rounds, generalized.
+- **(kkk) Este intervenes by generalizing.** Three of four interventions converted a local finding into a class. The practical consequence: when a finding looks local, ask where else it applies before moving on — that is the move he will make anyway.
+- **(lll) Scaffolding gets deprecated as models improve; instrumentation does not.** The Claude 5 rules cut Keystone's ALWAYS sections and leave Cart's friction and session logs untouched. Useful test for what survives a model-generation change.
+
+Calibration check-in skipped: no friction entries exist, because the session logger was never wired in this orchestrator context. All four planning docs stand exactly as generated — zero rewrites, so no `artifact_rewritten` signal either.
+
+`/iterate` not run. The build closed clean and there was no polish backlog; per the guide, iterate is optional and nobody should be pressured into it.
