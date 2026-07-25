@@ -26,6 +26,18 @@ Do not "rightsize" that file. There is nothing to trim: cutting a tool-owned blo
 
 Then offer to write one, and treat it as authoring rather than migration. The git log is the best seed: shipped bug fixes are gotchas that already cost someone something.
 
+## Warn before a shape change
+
+An existing file may carry sections this skeleton no longer produces: `## What's where`, `## Tech Stack`, `## Common tasks`, `## Design system`, or a standalone `## Voice`.
+
+To the builder, a diff that deletes those looks like the tool malfunctioning. It is not, and they should not have to guess. **Say so before showing the diff:**
+
+> **Heads up before the diff.** This `CLAUDE.md` has sections the current skeleton no longer produces — {name them}. Cutting them is deliberate: a session gets that from `ls`, the manifest, and `--help`, and it pays for those lines on every task. What follows is a shape change, not data loss. Anything non-obvious in those sections survives, relocated into Gotchas or Pointers. Nothing is written until you say go.
+
+Anchor the claim to **the sections present**, never to which version wrote them. A hand-authored file can have a "What's where" heading without this skill ever touching the repo; "your file has sections we now cut" is always true, "this was produced by an older version" is sometimes wrong.
+
+**A short result is a result.** When the output lands far below the input — a 150-line file becoming 45 — say that the reduction is the outcome, not a truncation, and name roughly what went and why. A builder who expected a long file and got a short one will otherwise assume something failed.
+
 ## Identifying a tool-owned region
 
 Match the marker on a **line of its own** — `line.strip() == "<!-- tool:start -->"` — never by substring search, and assert the extracted region's size before using it.

@@ -56,6 +56,7 @@ If nothing survives for gotchas, conventions, or rationale, render the **decline
 - [ ] Multi-surface repos got a nested-keystone proposal
 - [ ] No snapshot lists that rot — describe how to find state, never enumerate it
 - [ ] Every referenced path exists on disk
+- [ ] If the existing file carried sections this skeleton no longer produces, the builder was told **before** the diff, not after
 
 ### 5. Propose, don't create
 
