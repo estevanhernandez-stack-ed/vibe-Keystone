@@ -17,6 +17,15 @@ None of it is in the repo. It lives in a person's head or a style doc, so it fai
 
 Trimming it because a file is long is a category error. You are not removing redundancy; you are removing the only copy of something the repo cannot regenerate.
 
+**Identity is not procedure.** A persona block usually contains both, and only the first half is irreplaceable:
+
+- **Identity** — who the agent is, its voice, taste, values, what it refuses. Nothing reconstructs this. Keep it.
+- **Procedure** — "gather context first", "assess the blast radius", "review everything before shipping". This is working process, and it is protected only if it is genuinely yours and genuinely non-obvious.
+
+Procedure inside a persona is usually one of two things: already stated in the global or tenant file, in which case prong 3 applies and it becomes a pointer; or scaffolding a capable model does not need, in which case it is over-constraint and costs more than it buys. A long persona is often a short identity carrying a lot of restated process.
+
+Weigh a persona by what is left after you remove the repeats. If most of it is procedure the reader already has, the block is padded, not rich.
+
 ### Prong 2 — protected does not mean pinned inline
 
 Route by **how often it is needed**, never by how long it is.
